@@ -23,7 +23,9 @@ func TestChecksummer1(t *testing.T) {
 	exp1 := hexRes{"4030201", "4030201", "4030201", "4030201"}
 
 	checksummer := New()
-	checksummer.Write(inp1)
+	if _, err := checksummer.Write(inp1); err != nil {
+		t.Fatal(err)
+	}
 	res1 := checksummer.Sum64x4()
 	compare(t, "Checksum test 1, 4 bytes failed", exp1, res1)
 
@@ -36,13 +38,17 @@ func TestChecksummer2(t *testing.T) {
 	exp1 := hexRes{"c0a0806", "100d0a07", "14100c08", "18130e09"}
 
 	checksummer := New()
-	checksummer.Write(inp1)
+	if _, err := checksummer.Write(inp1); err != nil {
+		t.Fatal(err)
+	}
 	res1 := checksummer.Sum64x4()
 	compare(t, "Checksum test 2, 8 bytes written failed", exp1, res1)
 
 	inp2 := []byte{2, 4, 6, 8}
 	exp2 := hexRes{"14100c08", "241d160f", "382d2217", "50403020"}
-	checksummer.Write(inp2)
+	if _, err := checksummer.Write(inp2); err != nil {
+		t.Fatal(err)
+	}
 	res2 := checksummer.Sum64x4()
 	compare(t, "Checksum test 2, 12 bytes written failed", exp2, res2)
 
